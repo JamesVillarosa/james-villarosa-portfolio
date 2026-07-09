@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react'
-import Aurora from './components/Aurora'
+import { useState, useEffect, useCallback } from 'react'
+import LenisProvider, { useLenis } from './motion/LenisProvider'
+import Cursor from './motion/Cursor'
+import Preloader from './components/Preloader'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
+import Marquee from './components/Marquee'
 import About from './components/About'
 import Experience from './components/Experience'
 import Projects from './components/Projects'
@@ -11,52 +14,45 @@ import Footer from './components/Footer'
 
 const SECTIONS = ['hero', 'about', 'experience', 'projects', 'skills', 'contact']
 
-export default function App() {
+function Page({ ready }) {
+  const lenisRef = useLenis()
   const [activeSection, setActiveSection] = useState('hero')
-  const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => {
-      // Progress bar
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight
-      const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0
-      setScrollProgress(progress)
-
-      // Active section tracking
-      const scrollY = window.scrollY + 120
+      const scrollY = window.scrollY + 140
       let current = 'hero'
       for (const id of SECTIONS) {
         const el = document.getElementById(id)
-        if (el && el.offsetTop <= scrollY) {
-          current = id
-        }
+        if (el && el.offsetTop <= scrollY) current = id
       }
       setActiveSection(current)
     }
-
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const scrollTo = (id) => {
-    const el = document.getElementById(id)
-    if (el) {
-      const offset = id === 'hero' ? 0 : 68
-      const top = el.getBoundingClientRect().top + window.scrollY - offset
-      window.scrollTo({ top, behavior: 'smooth' })
-    }
-  }
+  const scrollTo = useCallback(
+    (id) => {
+      const el = document.getElementById(id)
+      if (!el) return
+      const offset = id === 'hero' ? 0 : 72
+      const lenis = lenisRef?.current
+      if (lenis) lenis.scrollTo(el, { offset: -offset, duration: 1.4 })
+      else {
+        const top = el.getBoundingClientRect().top + window.scrollY - offset
+        window.scrollTo({ top, behavior: 'smooth' })
+      }
+    },
+    [lenisRef]
+  )
 
   return (
-    <div style={{ minHeight: '100vh', position: 'relative' }}>
-      <Aurora />
-      <Navbar
-        activeSection={activeSection}
-        scrollTo={scrollTo}
-        scrollProgress={scrollProgress}
-      />
+    <>
+      <Navbar activeSection={activeSection} scrollTo={scrollTo} ready={ready} />
       <main>
-        <Hero scrollTo={scrollTo} />
+        <Hero ready={ready} />
+        <Marquee />
         <About />
         <Experience />
         <Projects />
@@ -64,6 +60,20 @@ export default function App() {
         <Contact />
       </main>
       <Footer scrollTo={scrollTo} />
-    </div>
+    </>
+  )
+}
+
+export default function App() {
+  const [ready, setReady] = useState(false)
+  const onComplete = useCallback(() => setReady(true), [])
+
+  return (
+    <LenisProvider ready={ready}>
+      <Cursor />
+      <Preloader onComplete={onComplete} />
+      <Page ready={ready} />
+      <div className="grain" aria-hidden="true" />
+    </LenisProvider>
   )
 }

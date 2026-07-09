@@ -1,234 +1,100 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import Magnetic from '../motion/Magnetic'
 import { personal } from '../data/portfolioData'
 
-const NAV_LINKS = [
+const LINKS = [
   { id: 'about', label: 'About' },
   { id: 'experience', label: 'Experience' },
-  { id: 'projects', label: 'Projects' },
+  { id: 'projects', label: 'Work' },
   { id: 'skills', label: 'Skills' },
   { id: 'contact', label: 'Contact' },
 ]
 
-export default function Navbar({ activeSection, scrollTo, scrollProgress }) {
+export default function Navbar({ activeSection, scrollTo, ready }) {
+  const [hidden, setHidden] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const lastY = useRef(0)
 
-  const handleNav = (id) => {
-    scrollTo(id)
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY
+      setScrolled(y > 80)
+      setHidden(y > lastY.current && y > 300 && !menuOpen)
+      lastY.current = y
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [menuOpen])
+
+  const go = (id) => {
     setMenuOpen(false)
+    scrollTo(id)
   }
 
   return (
     <>
-      <nav style={styles.nav}>
-        {/* Scroll progress bar */}
-        <div style={{ ...styles.progressBar, width: `${scrollProgress}%` }} />
+      <header
+        className={`nav ${scrolled ? 'nav--scrolled' : ''} ${hidden ? 'nav--hidden' : ''} ${
+          ready ? 'nav--ready' : ''
+        }`}
+      >
+        <button className="nav-logo" onClick={() => go('hero')} aria-label="Back to top">
+          James<span className="nav-logo-dot">.</span>
+        </button>
 
-        <div className="container" style={styles.inner}>
-          {/* Logo */}
-          <button style={styles.logo} onClick={() => handleNav('hero')} aria-label="Home">
-            <img src="/villarosa-logo.png" alt="Villarosa" style={styles.logoImg} />
-          </button>
-
-          {/* Desktop links */}
-          <ul style={styles.links}>
-            {NAV_LINKS.map((link) => (
-              <li key={link.id}>
-                <button
-                  onClick={() => handleNav(link.id)}
-                  style={{
-                    ...styles.link,
-                    ...(activeSection === link.id ? styles.linkActive : {}),
-                  }}
-                >
-                  {link.label}
-                  {activeSection === link.id && <span style={styles.linkDot} />}
-                </button>
-              </li>
-            ))}
-          </ul>
-
-          {/* CTA + hamburger */}
-          <div style={styles.navRight}>
-            <a
-              href={`mailto:${personal.email}?subject=Hello%20James`}
-              className="btn btn-primary btn-sm"
-            >
-              Say Hello
-            </a>
+        <nav className="nav-links" aria-label="Primary">
+          {LINKS.map((l) => (
             <button
-              style={styles.hamburger}
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle menu"
+              key={l.id}
+              className={`nav-link ${activeSection === l.id ? 'is-active' : ''}`}
+              onClick={() => go(l.id)}
             >
-              <span style={{ ...styles.bar, transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }} />
-              <span style={{ ...styles.bar, opacity: menuOpen ? 0 : 1 }} />
-              <span style={{ ...styles.bar, transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }} />
+              {l.label}
             </button>
+          ))}
+        </nav>
+
+        <div className="nav-right">
+          <Magnetic strength={0.3}>
+            <a className="nav-cta" href={`mailto:${personal.email}`}>
+              Get in touch
+            </a>
+          </Magnetic>
+          <button
+            className={`nav-burger ${menuOpen ? 'is-open' : ''}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+          >
+            <span />
+            <span />
+          </button>
+        </div>
+      </header>
+
+      <div className={`nav-overlay ${menuOpen ? 'is-open' : ''}`} aria-hidden={!menuOpen}>
+        <nav className="nav-overlay-links" aria-label="Mobile">
+          {LINKS.map((l, i) => (
+            <button
+              key={l.id}
+              className="nav-overlay-link"
+              style={{ transitionDelay: menuOpen ? `${0.15 + i * 0.06}s` : '0s' }}
+              onClick={() => go(l.id)}
+              tabIndex={menuOpen ? 0 : -1}
+            >
+              {l.label}
+            </button>
+          ))}
+        </nav>
+        <div className="nav-overlay-meta">
+          <a href={`mailto:${personal.email}`}>{personal.email}</a>
+          <div className="nav-overlay-socials">
+            <a href={personal.github} target="_blank" rel="noreferrer">GitHub</a>
+            <a href={personal.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
           </div>
         </div>
-
-        {/* Mobile menu */}
-        {menuOpen && (
-          <div style={styles.mobileMenu}>
-            {NAV_LINKS.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => handleNav(link.id)}
-                style={{
-                  ...styles.mobileLink,
-                  ...(activeSection === link.id ? styles.mobileLinkActive : {}),
-                }}
-              >
-                {link.label}
-              </button>
-            ))}
-            <a
-              href={`mailto:${personal.email}?subject=Hello%20James`}
-              className="btn btn-primary"
-              style={{ width: '100%', justifyContent: 'center', marginTop: 8 }}
-            >
-              Say Hello
-            </a>
-          </div>
-        )}
-      </nav>
-      {/* Spacer so content doesn't hide under fixed nav */}
-      <div style={{ height: 68 }} />
+      </div>
     </>
   )
-}
-
-const styles = {
-  nav: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 100,
-    backgroundColor: 'rgba(255,255,255,0.65)',
-    backdropFilter: 'blur(18px) saturate(160%)',
-    WebkitBackdropFilter: 'blur(18px) saturate(160%)',
-    borderBottom: '1px solid rgba(226,232,240,0.7)',
-    boxShadow: '0 1px 24px rgba(15,23,42,0.04)',
-  },
-  progressBar: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    height: 3,
-    background: 'linear-gradient(90deg, #2563eb, #60a5fa)',
-    transition: 'width 0.1s ease',
-    zIndex: 101,
-  },
-  inner: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: 68,
-    gap: 20,
-  },
-  logo: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 0,
-    cursor: 'pointer',
-  },
-  logoImg: {
-    height: 38,
-    width: 'auto',
-    display: 'block',
-    objectFit: 'contain',
-  },
-  links: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 4,
-    flex: 1,
-    justifyContent: 'center',
-  },
-  link: {
-    position: 'relative',
-    fontFamily: 'var(--font-body)',
-    fontSize: 14,
-    fontWeight: 500,
-    color: 'var(--text-mid)',
-    padding: '6px 14px',
-    borderRadius: 'var(--radius-full)',
-    transition: 'color 0.2s, background 0.2s',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: 3,
-  },
-  linkActive: {
-    color: 'var(--blue)',
-    fontWeight: 600,
-    background: 'var(--blue-pale)',
-  },
-  linkDot: {
-    display: 'block',
-    width: 4,
-    height: 4,
-    borderRadius: '50%',
-    background: 'var(--blue)',
-  },
-  navRight: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 12,
-  },
-  hamburger: {
-    display: 'none',
-    flexDirection: 'column',
-    gap: 5,
-    padding: 6,
-    cursor: 'pointer',
-    '@media(maxWidth:768px)': {
-      display: 'flex',
-    },
-  },
-  bar: {
-    display: 'block',
-    width: 22,
-    height: 2,
-    background: 'var(--text-dark)',
-    borderRadius: 2,
-    transition: 'all 0.25s ease',
-  },
-  mobileMenu: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 4,
-    padding: '16px 20px',
-    borderTop: '1px solid var(--border)',
-    background: 'var(--white)',
-  },
-  mobileLink: {
-    fontFamily: 'var(--font-body)',
-    fontWeight: 500,
-    fontSize: 15,
-    color: 'var(--text-mid)',
-    padding: '12px 16px',
-    borderRadius: 'var(--radius-sm)',
-    textAlign: 'left',
-    transition: 'background 0.2s',
-  },
-  mobileLinkActive: {
-    background: 'var(--blue-pale)',
-    color: 'var(--blue)',
-    fontWeight: 600,
-  },
-}
-
-// Responsive: show hamburger on mobile
-const mobileStyle = document.createElement('style')
-mobileStyle.textContent = `
-  @media (max-width: 768px) {
-    .nav-links { display: none !important; }
-    .nav-hamburger { display: flex !important; }
-    .nav-hire { display: none !important; }
-  }
-`
-if (typeof document !== 'undefined') {
-  document.head.appendChild(mobileStyle)
 }
