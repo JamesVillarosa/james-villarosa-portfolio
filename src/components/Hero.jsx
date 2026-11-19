@@ -9,7 +9,8 @@ const SPECS = [
   ['Open to', personal.available],
 ]
 
-const INTRO_MS = 3000 // spin time; holds at 90% until the 3D scene is ready
+const INTRO_MS = 3400 // assemble time; holds at 90% until the 3D scene is ready
+const STATUS = ['Booting runtime', 'Streaming data', 'Assembling agents', 'Deploying', 'Live']
 const MAX_WAIT = 6000 // never trap the visitor if WebGL is slow or missing
 
 // Intro: navy screen, the V spins centre stage while a counter runs, then the navy irises into the V.
@@ -66,6 +67,7 @@ export default function Hero() {
       {phase !== 'done' && (
         <div className={`intro ${phase === 'out' ? 'is-out' : ''}`} aria-hidden="true">
           <span className="intro-name">James Carl Villarosa</span>
+          <span className="intro-status">{STATUS[Math.min(Math.floor(p * STATUS.length), STATUS.length - 1)]}</span>
           <span className="intro-line"><i style={{ transform: `scaleX(${p})` }} /></span>
           <span className="intro-count">{String(Math.round(p * 100)).padStart(3, '0')}</span>
         </div>

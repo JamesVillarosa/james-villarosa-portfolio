@@ -1,5 +1,8 @@
 import * as THREE from 'three'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
+import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler.js'
+
+const ASSEMBLE = [0.4, 2.8] // seconds: particles swirl in, lock onto the V, solid mark fades up
 
 // The "V" mark, extruded and floated like a product shot. Positioned over `stage` (a DOM element) at any size.
 export function mountHeroScene(canvas, stage) {
@@ -30,12 +33,56 @@ export function mountHeroScene(canvas, stage) {
   const geo = new THREE.ExtrudeGeometry(s, { depth: 0.75, bevelEnabled: true, bevelThickness: 0.1, bevelSize: 0.07, bevelSegments: 8, curveSegments: 1 })
   geo.center()
   const v = new THREE.Mesh(geo, [
-    new THREE.MeshPhysicalMaterial({ color: 0xf5f8fc, roughness: 0.28, clearcoat: 1, clearcoatRoughness: 0.15 }), // faces
-    new THREE.MeshPhysicalMaterial({ color: 0x0e4c82, roughness: 0.35, metalness: 0.1, clearcoat: 0.6 }), // sides
+    new THREE.MeshPhysicalMaterial({ color: 0xf5f8fc, roughness: 0.28, clearcoat: 1, clearcoatRoughness: 0.15, transparent: true, opacity: 0 }), // faces
+    new THREE.MeshPhysicalMaterial({ color: 0x0e4c82, roughness: 0.35, metalness: 0.1, clearcoat: 0.6, transparent: true, opacity: 0 }), // sides
   ])
   const rig = new THREE.Group()
   rig.add(v)
   scene.add(rig)
+
+  // "data" particles: start as a spinning galaxy, each one flies to a point sampled on the V's surface
+  const N = innerWidth < 768 ? 1400 : 2600 // fewer on phones
+  const sampler = new MeshSurfaceSampler(new THREE.Mesh(geo)).build()
+  const onV = new Float32Array(N * 3), start = new Float32Array(N * 3), seed = new Float32Array(N)
+  const pt = new THREE.Vector3()
+  for (let i = 0; i < N; i++) {
+    sampler.sample(pt)
+    pt.toArray(onV, i * 3)
+    const a = Math.random() * Math.PI * 2, r = 1.5 + Math.random() * 2.8
+    start.set([Math.cos(a) * r, (Math.random() - 0.5) * 1.6 * (r / 3), Math.sin(a) * r], i * 3)
+    seed[i] = Math.random()
+  }
+  const pgeo = new THREE.BufferGeometry()
+  pgeo.setAttribute('position', new THREE.BufferAttribute(onV, 3))
+  pgeo.setAttribute('aStart', new THREE.BufferAttribute(start, 3))
+  pgeo.setAttribute('aSeed', new THREE.BufferAttribute(seed, 1))
+  const pmat = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    uniforms: { uP: { value: 0 }, uT: { value: 0 }, uFade: { value: 1 }, uPx: { value: renderer.getPixelRatio() } },
+    vertexShader: /* glsl */ `
+      attribute vec3 aStart; attribute float aSeed;
+      uniform float uP, uT, uPx; varying float vSeed;
+      void main() {
+        float k = clamp((uP - aSeed * 0.35) / 0.65, 0.0, 1.0);
+        k = k * k * (3.0 - 2.0 * k);                       // staggered smoothstep: particles land in waves
+        float ang = uT * (0.5 + aSeed * 0.8) * (1.0 - k);  // orbit until captured
+        vec3 s = vec3(aStart.x * cos(ang) - aStart.z * sin(ang), aStart.y, aStart.x * sin(ang) + aStart.z * cos(ang));
+        vSeed = aSeed;
+        vec4 mv = modelViewMatrix * vec4(mix(s, position, k), 1.0);
+        gl_Position = projectionMatrix * mv;
+        gl_PointSize = (2.0 + aSeed * 3.0) * uPx * (10.0 / -mv.z);
+      }`,
+    fragmentShader: /* glsl */ `
+      uniform float uFade; varying float vSeed;
+      void main() {
+        float d = length(gl_PointCoord - 0.5);
+        if (d > 0.5) discard;
+        vec3 c = mix(vec3(0.75, 0.9, 1.0), vec3(1.0, 0.45, 0.25), step(0.85, vSeed)); // mostly ice-blue, some orange
+        gl_FragColor = vec4(c, (1.0 - d * 2.0) * uFade);
+      }`,
+  })
+  const points = new THREE.Points(pgeo, pmat)
+  rig.add(points)
 
   // soft contact shadow: a radial gradient sprite that tightens as the mark floats down
   const sc = document.createElement('canvas')
@@ -74,10 +121,23 @@ export function mountHeroScene(canvas, stage) {
   addEventListener('pointermove', onMove, { passive: true })
 
   const clock = new THREE.Clock()
+  const born = performance.now() // assembly runs on wall time so slow GPUs stay in sync with the intro
   let t = 0
   const frame = () => {
     const dt = Math.min(clock.getDelta(), 0.05) // clamped so resuming after a pause doesn't jump
     t += dt
+
+    // assemble: particles converge onto the V, the solid mark fades up, then the particles dissolve
+    const age = (performance.now() - born) / 1000
+    const asm = reduce ? 1 : THREE.MathUtils.clamp((age - ASSEMBLE[0]) / (ASSEMBLE[1] - ASSEMBLE[0]), 0, 1)
+    const solid = THREE.MathUtils.smoothstep(asm, 0.78, 1)
+    const fade = reduce ? 0 : 1 - THREE.MathUtils.clamp((age - ASSEMBLE[1]) / 1.4, 0, 1)
+    pmat.uniforms.uP.value = asm
+    pmat.uniforms.uT.value = t
+    pmat.uniforms.uFade.value = fade
+    points.visible = fade > 0
+    v.material.forEach((m) => { m.opacity = solid })
+    if (solid === 1 && v.material[0].transparent) v.material.forEach((m) => { m.transparent = false; m.needsUpdate = true })
     const k = 1 - Math.pow(0.001, dt) // frame-rate independent lerp factor
     cur.x += (target.x - cur.x) * Math.min(k * 1.6, 1)
     cur.y += (target.y - cur.y) * Math.min(k * 1.6, 1)
@@ -104,7 +164,7 @@ export function mountHeroScene(canvas, stage) {
     shadow.position.set(px, py - ps * 1.55 + scroll * 1.5, -0.6)
     const sw = ps * (2.4 - bob * 2)
     shadow.scale.set(sw, sw * 0.28, 1)
-    shadow.material.opacity = (0.85 - bob * 2) * (1 - Math.min(scroll, 1))
+    shadow.material.opacity = (0.85 - bob * 2) * solid * (1 - Math.min(scroll, 1))
     renderer.render(scene, camera)
   }
 

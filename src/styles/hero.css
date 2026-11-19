@@ -103,3 +103,6 @@ html.is-loading { overflow: hidden; }
 .intro-line i { position: absolute; inset: 0; background: var(--hot); transform-origin: 0 50%; }
 .intro.is-out > span { opacity: 0; transition: opacity 300ms; }
 @media (max-width: 600px) { .intro-name { display: none; } }
+.intro-status { left: 50%; transform: translateX(-50%); bottom: 58px !important; color: #fff !important; white-space: nowrap; }
+.intro-status::before { content: '> '; color: var(--hot); }
+.is-loading .band { visibility: hidden; }
