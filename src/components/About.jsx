@@ -38,7 +38,7 @@ export default function About() {
         <div className="section-head">
           <div className="reveal">
             <p className="eyebrow">01 · About</p>
-            <h2 className="h2">CS student at UPLB, shipping production software since 2025.</h2>
+            <h2 className="h2">CS graduate, shipping production software since 2024.</h2>
           </div>
         </div>
 

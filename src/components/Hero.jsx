@@ -4,7 +4,7 @@ import Icon from './Icons'
 import '../styles/hero.css'
 
 const SPECS = [
-  ['Role', 'Backend · Full stack · AI'],
+  ['Focus', 'AI · Automation · Full stack'],
   ['Based in', 'Santa Rosa, PH'],
   ['Open to', personal.available],
 ]
@@ -78,7 +78,7 @@ export default function Hero() {
           <h1 className="hero-title hero-in" style={{ '--i': 1 }}>James Carl<br />Villarosa</h1>
           <p className="hero-role hero-in" style={{ '--i': 2 }}>{personal.title}</p>
           <p className="hero-tag hero-in" style={{ '--i': 3 }}>
-            CS at UPLB. Team lead at a Japanese software startup, building APIs, dashboards and AI features that run in production.
+            Sole AI and automation engineer at a UK ecommerce company. I build the platform, the n8n automations and the AI agents that run its operations.
           </p>
           <a href="#projects" className="btn btn-primary hero-in" style={{ '--i': 4 }}>
             View my work <span className="btn-icon"><Icon name="down" size={16} /></span>

@@ -3,13 +3,12 @@ import '../styles/skills.css'
 
 // one plain-language line per category so non-engineers can scan it
 const WHAT = {
-  Languages: 'What I write code in',
-  Backend: 'Building APIs and servers',
-  Frontend: 'Web and mobile interfaces',
-  Databases: 'Storing and querying data',
-  'DevOps & Tools': 'Shipping and running apps',
-  'AI APIs & Models': 'Models I build features with',
-  'AI Tooling & Workflows': 'AI tools I use every day',
+  'AI & Automation': 'Agents and workflows that do the work',
+  'AI-Assisted Development': 'How I write and check code with AI',
+  'Back-End & Data': 'APIs, servers and databases',
+  'Front-End': 'Web and mobile interfaces',
+  'Practices & Reliability': 'Keeping things running in production',
+  'Other Languages': 'Also written in school and side work',
 }
 
 export default function Skills() {

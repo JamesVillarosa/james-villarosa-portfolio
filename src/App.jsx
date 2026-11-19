@@ -47,7 +47,7 @@ export default function App() {
         <div className="band" aria-hidden="true">
           <div className="band-track">
             {Array.from({ length: 2 }, (_, i) => (
-              <span key={i}>Backend systems <b>✕</b> Full stack apps <b>✕</b> AI integrations <b>✕</b> Production deploys <b>✕</b>&nbsp;</span>
+              <span key={i}>AI agents <b>✕</b> n8n automations <b>✕</b> MCP servers <b>✕</b> Full stack apps <b>✕</b> Production deploys <b>✕</b>&nbsp;</span>
             ))}
           </div>
         </div>
