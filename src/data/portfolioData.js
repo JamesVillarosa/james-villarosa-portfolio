@@ -24,7 +24,7 @@ export const about = {
   stats: [
     { label: 'Years remote experience', value: '2' },
     { label: 'GWA (honors level)', value: '1.58' },
-    { label: 'GitHub contributions', value: '678+' },
+    { label: 'GitHub contributions', value: '3800+' },
     { label: "Dean's Lister", value: 'Every Sem' },
   ],
   quickInfo: [
@@ -93,7 +93,8 @@ export const projects = [
       'Designed, built and launched the whole product alone: front end, REST backend, database schema, RAG pipeline and a streaming speech-to-text / text-to-speech voice loop for Filipino languages. Engineered for correctness with hallucination detection, structured observability logging and retry with exponential backoff. Validated with 20 real users at SUS 84.4/100, Grade A (UP CMSC 190 thesis).',
     tech: ['React Native (Expo)', 'TypeScript', 'Python (FastAPI)', 'PostgreSQL', 'Supabase', 'Groq Whisper', 'Azure TTS', 'Gemini API', 'RAG'],
     github: 'https://github.com/JamesVillarosa/ANO-KAMO',
-    live: null,
+    live: 'https://www.canva.com/design/DAHGL17zYG0/4xIrdnM-E6MLQjDCfp8NYA/view',
+    liveLabel: 'View presentation',
     logo: 'anokamo.png',
     color: '#ffd56b',
     ink: '#0b1f33',
@@ -106,7 +107,7 @@ export const projects = [
       'A delivery-based business system built end to end: order and delivery management, an offline queue with reliable sync for field staff, fuzzy-matching deduplication of customer records, role-based access, and a real-time admin dashboard for the owner.',
     tech: ['React Native (Expo)', 'TypeScript', 'Supabase', 'PostgreSQL', 'Auth + RLS'],
     github: 'https://github.com/JamesVillarosa/GoldenValley-2.0',
-    live: 'https://golden-valley-theta.vercel.app',
+    live: null,
     logo: 'goldenvalley.png',
     logoScale: 1.7,
     color: '#1f3d2b',

@@ -28,7 +28,7 @@ function Count({ value }) {
 
   if (!m) return <span ref={ref} className="stat-word">{value}</span>
   const decimals = (m[1].split('.')[1] || '').length
-  return <span ref={ref}>{n.toFixed(decimals)}{m[2]}</span>
+  return <span ref={ref}>{n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}{m[2]}</span>
 }
 
 export default function About() {

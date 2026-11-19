@@ -8,7 +8,7 @@ function Links({ p }) {
     <div className="p-links">
       {p.live && (
         <a href={p.live} target="_blank" rel="noreferrer" className="p-link p-link-live">
-          View live <Icon name="arrow" size={16} />
+          {p.liveLabel || 'View live'} <Icon name="arrow" size={16} />
         </a>
       )}
       {p.github && (
