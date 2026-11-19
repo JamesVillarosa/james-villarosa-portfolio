@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import Aurora from './components/Aurora'
+import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -9,61 +8,52 @@ import Skills from './components/Skills'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 
-const SECTIONS = ['hero', 'about', 'experience', 'projects', 'skills', 'contact']
-
 export default function App() {
-  const [activeSection, setActiveSection] = useState('hero')
-  const [scrollProgress, setScrollProgress] = useState(0)
+  const [active, setActive] = useState('hero')
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Progress bar
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight
-      const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0
-      setScrollProgress(progress)
+    // one observer for every .reveal element (fires once)
+    const reveal = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); reveal.unobserve(e.target) }
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' })
+    document.querySelectorAll('.reveal').forEach((el) => reveal.observe(el))
 
-      // Active section tracking
-      const scrollY = window.scrollY + 120
-      let current = 'hero'
-      for (const id of SECTIONS) {
-        const el = document.getElementById(id)
-        if (el && el.offsetTop <= scrollY) {
-          current = id
-        }
-      }
-      setActiveSection(current)
+    // active section = the one crossing the viewport's middle line
+    const spy = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) setActive(e.target.id)
+    }, { rootMargin: '-50% 0px -50% 0px' })
+    document.querySelectorAll('main section[id]').forEach((el) => spy.observe(el))
+
+    // cursor spotlight for any .spot card
+    const onMove = (e) => {
+      const card = e.target.closest?.('.spot')
+      if (!card) return
+      const r = card.getBoundingClientRect()
+      card.style.setProperty('--x', `${e.clientX - r.left}px`)
+      card.style.setProperty('--y', `${e.clientY - r.top}px`)
     }
+    window.addEventListener('pointermove', onMove, { passive: true })
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => { reveal.disconnect(); spy.disconnect(); window.removeEventListener('pointermove', onMove) }
   }, [])
 
-  const scrollTo = (id) => {
-    const el = document.getElementById(id)
-    if (el) {
-      const offset = id === 'hero' ? 0 : 68
-      const top = el.getBoundingClientRect().top + window.scrollY - offset
-      window.scrollTo({ top, behavior: 'smooth' })
-    }
-  }
-
   return (
-    <div style={{ minHeight: '100vh', position: 'relative' }}>
-      <Aurora />
-      <Navbar
-        activeSection={activeSection}
-        scrollTo={scrollTo}
-        scrollProgress={scrollProgress}
-      />
-      <main>
-        <Hero scrollTo={scrollTo} />
+    <>
+      <a href="#main" className="skip-link">Skip to content</a>
+      <div className="bg" aria-hidden="true">
+        <div className="bg-orb a" /><div className="bg-orb b" /><div className="bg-grid" /><div className="bg-noise" />
+      </div>
+      <div className="progress" aria-hidden="true" />
+      <Navbar active={active} />
+      <main id="main">
+        <Hero />
         <About />
         <Experience />
         <Projects />
         <Skills />
         <Contact />
       </main>
-      <Footer scrollTo={scrollTo} />
-    </div>
+      <Footer />
+    </>
   )
 }

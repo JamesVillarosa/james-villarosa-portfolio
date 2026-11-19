@@ -29,3 +29,6 @@ lerna-debug.log*
 *.log
 .cache/
 .parcel-cache/
+
+# playwright
+.playwright-mcp/
