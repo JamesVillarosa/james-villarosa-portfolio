@@ -1,0 +1,4 @@
+.footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding-block: 32px 40px; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); font-family: var(--mono); }
+.footer-top { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); transition: color 200ms var(--ease-out); }
+@media (hover: hover) { .footer-top:hover { color: var(--accent); } }
+@media (max-width: 640px) { .footer-mid { display: none; } }

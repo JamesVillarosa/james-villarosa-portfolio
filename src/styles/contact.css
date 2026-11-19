@@ -1,0 +1,20 @@
+.contact-hero { display: grid; justify-items: center; text-align: center; gap: 24px; margin-bottom: clamp(56px, 8vw, 96px); }
+.contact-title { font-size: clamp(2.75rem, 8vw, 6.5rem); font-weight: 500; letter-spacing: -0.05em; line-height: 0.95; text-wrap: balance; }
+.contact-title .serif { color: var(--accent); }
+.contact .lede { margin-inline: auto; text-wrap: balance; }
+
+.mail-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 12px; }
+.copy { font-family: var(--mono); font-size: 14px; }
+.copy-text { min-width: 24ch; text-align: left; }
+.copy .btn-icon { animation: pop 300ms var(--ease-out); }
+@keyframes pop { from { transform: scale(0.6); opacity: 0; } }
+
+.c-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.c-card { display: flex; flex-direction: column; gap: 4px; min-height: 168px; color: var(--muted); }
+.c-card > svg { margin-bottom: auto; color: var(--text); }
+.c-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
+.c-value { color: var(--text); font-size: 1.0625rem; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.c-arrow { position: absolute; top: clamp(16px, 2.2vw, 24px); right: clamp(16px, 2.2vw, 24px); width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); transition: transform 300ms var(--ease-out), background-color 200ms var(--ease-out), color 200ms var(--ease-out); }
+@media (hover: hover) { a.c-card:hover .c-arrow { transform: translate(2px, -2px); background: var(--accent); color: var(--accent-ink); } }
+
+@media (max-width: 520px) { .copy-text { min-width: 0; } .copy { max-width: 100%; } }
