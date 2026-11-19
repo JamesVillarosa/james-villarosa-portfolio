@@ -25,7 +25,7 @@ function Links({ p }) {
 export default function Projects() {
   const [featured, ...rest] = projects
   return (
-    <section id="projects" className="section">
+    <section id="projects" className="section theme-light">
       <div className="container">
         <div className="section-head">
           <div className="reveal">

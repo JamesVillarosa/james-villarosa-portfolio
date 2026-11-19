@@ -57,7 +57,7 @@
 
 @media (max-width: 959px) {
   .hero { padding-bottom: 72px; }
-  .hero-ghost { top: 58%; }
+  .hero-ghost { top: 66%; }
   .hero-scroll { display: none; }
   .hero-specs { grid-template-columns: 1fr 1fr; }
   .hero-social { grid-column: 1 / -1; }
@@ -66,3 +66,20 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-in, .hero-ghost { opacity: 1; animation: none; }
 }
+
+/* studio lighting: key light behind the mark, darker falloff to the edges and floor */
+.hero::before {
+  content: ''; position: absolute; inset: 0; z-index: -3; pointer-events: none;
+  background:
+    radial-gradient(ellipse 42% 55% at 55% 46%, rgba(120, 190, 245, 0.55), transparent 70%),
+    radial-gradient(ellipse 120% 90% at 50% 40%, transparent 45%, rgba(6, 34, 66, 0.55) 100%),
+    linear-gradient(180deg, transparent 70%, rgba(6, 34, 66, 0.35));
+}
+@media (max-width: 959px) {
+  .hero::before { background:
+    radial-gradient(ellipse 70% 30% at 50% 66%, rgba(120, 190, 245, 0.55), transparent 70%),
+    radial-gradient(ellipse 140% 90% at 50% 50%, transparent 45%, rgba(6, 34, 66, 0.5) 100%); }
+}
+
+/* hold the hero choreography until the intro curtain lifts */
+.is-loading .hero-in, .is-loading .hero-ghost { animation-play-state: paused; }

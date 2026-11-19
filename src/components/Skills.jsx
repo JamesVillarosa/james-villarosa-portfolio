@@ -6,7 +6,7 @@ const SPANS = [7, 5, 4, 4, 4, 6, 6]
 
 export default function Skills() {
   return (
-    <section id="skills" className="section">
+    <section id="skills" className="section theme-navy">
       <div className="container">
         <div className="section-head">
           <div className="reveal">

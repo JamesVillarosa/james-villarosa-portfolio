@@ -1,5 +1,5 @@
 .contact-hero { display: grid; justify-items: center; text-align: center; gap: 24px; margin-bottom: clamp(56px, 8vw, 96px); }
-.contact-title { font-size: clamp(2.75rem, 8vw, 6.5rem); font-weight: 500; letter-spacing: -0.05em; line-height: 0.95; text-wrap: balance; }
+.contact-title { font-family: var(--display); text-transform: uppercase; font-size: clamp(4rem, 14vw, 12rem); font-weight: 400; letter-spacing: 0; line-height: 0.9; text-wrap: balance; }
 .contact-title .serif { color: var(--accent); }
 .contact .lede { margin-inline: auto; text-wrap: balance; }
 

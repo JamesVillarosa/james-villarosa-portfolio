@@ -12,6 +12,8 @@
   --dim: #b5d3ec;
   --accent: #ffffff;
   --accent-ink: #0f4f86;
+  --accent-hover: #e6f1fb;
+  --hot: #ff6a3d;
 
   --font: 'Geist', ui-sans-serif, system-ui, sans-serif;
   --mono: 'Geist Mono', ui-monospace, monospace;
@@ -67,7 +69,7 @@ section[id] { scroll-margin-top: 24px; }
 /* ── Type ─────────────────────────────────────────────────────────── */
 .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); }
 .eyebrow.status { display: inline-flex; align-items: center; gap: 10px; color: var(--muted); }
-.eyebrow.status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2); }
+.eyebrow.status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--hot); box-shadow: 0 0 0 3px rgba(255, 106, 61, 0.25); }
 
 .h2 {
   font-family: var(--display); text-transform: uppercase;
@@ -109,7 +111,7 @@ section[id] { scroll-margin-top: 24px; }
 }
 .btn-ghost .btn-icon { background: var(--surface-2); }
 @media (hover: hover) {
-  .btn-primary:hover { background: #e6f1fb; }
+  .btn-primary:hover { background: var(--accent-hover); }
   .btn-ghost:hover { border-color: rgba(255, 255, 255, 0.24); background: var(--surface-2); }
   .btn:hover .btn-icon { transform: translate(2px, -2px) scale(1.05); }
 }
@@ -119,7 +121,7 @@ section[id] { scroll-margin-top: 24px; }
 
 .progress {
   position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 60;
-  background: var(--accent); transform-origin: 0 50%; transform: scaleX(0);
+  background: var(--hot); transform-origin: 0 50%; transform: scaleX(0);
   animation: grow linear both; animation-timeline: scroll(root);
 }
 @keyframes grow { to { transform: scaleX(1); } }
@@ -138,3 +140,19 @@ section[id] { scroll-margin-top: 24px; }
   .reveal { transform: none; filter: none; transition: opacity 400ms ease; }
   .progress { display: none; }
 }
+
+/* ── Section themes: alternate colour fields so the page has rhythm ── */
+.section { background: var(--bg); color: var(--text); }
+.theme-light {
+  --bg: #f4f1ea; --bg-2: #e8e3d8; --ghost: #ebe6dc;
+  --text: #0b1f33; --muted: #44546a; --dim: #66768a;
+  --line: rgba(11, 31, 51, 0.14); --line-2: rgba(11, 31, 51, 0.3);
+  --surface: rgba(11, 31, 51, 0.04); --surface-2: rgba(11, 31, 51, 0.08);
+  --accent: #0b1f33; --accent-ink: #ffffff; --accent-hover: #1d3a57;
+}
+.theme-navy {
+  --bg: #0c3558; --bg-2: #0a2c4a; --ghost: #10406a;
+  --muted: #c9dcee; --dim: #9dbbd8;
+}
+.eyebrow { color: var(--dim); }
+.btn-primary .btn-icon { background: var(--hot); color: #fff; }
