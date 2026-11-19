@@ -8,11 +8,8 @@ export default function Experience() {
         <div className="section-head">
           <div className="reveal">
             <p className="eyebrow">02 · Experience</p>
-            <h2 className="h2">Shipped to <span className="serif">production.</span></h2>
+            <h2 className="h2">Where I've worked</h2>
           </div>
-          <p className="lede reveal" style={{ '--i': 1 }}>
-            From a Japanese software startup to campus leadership: real clients, real uptime, real deadlines.
-          </p>
         </div>
 
         <ol className="timeline">

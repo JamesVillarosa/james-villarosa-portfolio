@@ -11,11 +11,8 @@ export default function Skills() {
         <div className="section-head">
           <div className="reveal">
             <p className="eyebrow">04 · Toolkit</p>
-            <h2 className="h2">The <span className="serif">stack</span> behind the work.</h2>
+            <h2 className="h2">Tools I work with</h2>
           </div>
-          <p className="lede reveal" style={{ '--i': 1 }}>
-            Backend-first, comfortable across the stack, and building AI into everyday engineering.
-          </p>
         </div>
 
         <div className="s-grid">

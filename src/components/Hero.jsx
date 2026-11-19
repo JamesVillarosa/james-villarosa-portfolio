@@ -4,19 +4,12 @@ import '../styles/hero.css'
 
 const STACK = [...skills.Languages.slice(0, 4), ...skills.Backend.slice(0, 3), 'React', 'React Native', 'Docker', 'NGINX', 'MongoDB', 'MySQL', 'Gemini', 'Claude', 'RAG Pipelines']
 
-const TERMINAL = [
-  ['$', 'whoami'],
-  ['>', 'backend · full-stack · ai engineer'],
-  ['$', 'cat impact.json'],
-  ['{', '"uptime": "99.9%", "team": 6, "gwa": 1.64 }'],
-]
-
 export default function Hero() {
   return (
     <section id="hero" className="hero">
       <div className="container hero-grid">
         <div className="hero-copy">
-          <p className="eyebrow hero-in" style={{ '--i': 0 }}>Available · {personal.available}</p>
+          <p className="eyebrow status hero-in" style={{ '--i': 0 }}>Available · {personal.available}</p>
 
           <h1 className="hero-title">
             <span className="line"><span style={{ '--i': 1 }}>James Carl</span></span>
@@ -46,15 +39,6 @@ export default function Hero() {
               <img src={personal.photo} alt={`Portrait of ${personal.name}`} width="560" height="680" fetchpriority="high" />
               <span className="portrait-tag"><Icon name="pin" size={14} /> {personal.location.split(',')[0]}, PH</span>
             </div>
-          </div>
-          <div className="terminal" aria-label="Quick profile summary">
-            <div className="terminal-bar"><i /><i /><i /><span>~/james</span></div>
-            <pre>
-              {TERMINAL.map(([p, t], i) => (
-                <code key={i} style={{ '--l': i }}><b className={p === '$' ? 'acc' : ''}>{p}</b> {t}</code>
-              ))}
-              <code style={{ '--l': TERMINAL.length }}><b className="acc">$</b> <span className="caret" /></code>
-            </pre>
           </div>
         </div>
       </div>

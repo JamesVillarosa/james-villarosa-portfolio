@@ -30,10 +30,10 @@ export default function Projects() {
         <div className="section-head">
           <div className="reveal">
             <p className="eyebrow">03 · Selected work</p>
-            <h2 className="h2">Things I've <span className="serif">built.</span></h2>
+            <h2 className="h2">Selected projects</h2>
           </div>
           <p className="lede reveal" style={{ '--i': 1 }}>
-            AI products, full-stack platforms, and data-heavy systems, from thesis research to production apps.
+            Seven projects across AI, web, and mobile, starting with my undergraduate thesis.
           </p>
         </div>
 

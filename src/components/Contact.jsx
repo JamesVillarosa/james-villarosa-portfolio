@@ -26,8 +26,8 @@ export default function Contact() {
       <div className="container">
         <div className="contact-hero reveal">
           <p className="eyebrow">05 · Contact</p>
-          <h2 className="contact-title">Let's build something<br />that <span className="serif">lasts.</span></h2>
-          <p className="lede">Open to remote and full-time roles in backend, full-stack, and AI engineering. I usually reply within a day.</p>
+          <h2 className="contact-title">Let's talk.</h2>
+          <p className="lede">Open to remote and full-time roles in backend, full-stack, and AI engineering.</p>
 
           <div className="mail-row">
             <a href={`mailto:${personal.email}`} className="btn btn-primary">
