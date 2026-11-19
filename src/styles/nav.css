@@ -4,11 +4,11 @@
   pointer-events: auto; position: relative; z-index: 2;
   display: flex; align-items: center; gap: 6px;
   padding: 6px; border-radius: 999px;
-  background: rgba(14, 15, 18, 0.66);
+  background: rgba(14, 84, 140, 0.55);
   border: 1px solid var(--line);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
-  box-shadow: 0 10px 40px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 40px -12px rgba(6, 30, 60, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .nav-logo { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); }
@@ -34,7 +34,7 @@
   transition: transform 160ms var(--ease-out), background-color 200ms var(--ease-out);
 }
 .nav-cta:active { transform: scale(0.97); }
-@media (hover: hover) { .nav-cta:hover { background: #d6ff7a; } }
+@media (hover: hover) { .nav-cta:hover { background: #e6f1fb; } }
 
 .burger { display: none; width: 40px; height: 40px; border-radius: 50%; background: var(--surface-2); position: relative; }
 .burger span {
@@ -50,7 +50,7 @@
   pointer-events: none; position: fixed; inset: 0; z-index: 1;
   display: flex; flex-direction: column; justify-content: center; gap: 40px;
   padding: 120px 28px 48px;
-  background: rgba(7, 8, 10, 0.86);
+  background: rgba(22, 107, 176, 0.94);
   backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
   opacity: 0; transition: opacity 300ms var(--ease-out);
 }

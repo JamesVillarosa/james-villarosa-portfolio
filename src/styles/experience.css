@@ -2,7 +2,7 @@
 .timeline::before, .timeline::after { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px; background: var(--line-2); }
 /* accent line fills as the timeline scrolls through the viewport */
 .timeline::after {
-  background: linear-gradient(var(--accent), rgba(200, 245, 96, 0.2));
+  background: linear-gradient(var(--accent), rgba(255, 255, 255, 0.25));
   transform-origin: top; transform: scaleY(0);
   animation: grow-y linear both; animation-timeline: view(); animation-range: entry 20% cover 60%;
 }
@@ -12,7 +12,7 @@
 .job { position: relative; display: grid; gap: 18px; }
 .job::before {
   content: ''; position: absolute; left: -33px; top: 6px; width: 11px; height: 11px; border-radius: 50%;
-  background: var(--bg); border: 1px solid var(--accent); box-shadow: 0 0 0 4px var(--bg), 0 0 16px rgba(200, 245, 96, 0.5);
+  background: var(--bg); border: 1px solid var(--accent); box-shadow: 0 0 0 4px var(--bg);
 }
 @media (min-width: 900px) {
   .timeline { padding-left: 0; }
