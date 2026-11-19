@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import Preloader from './components/Preloader'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -39,6 +40,7 @@ export default function App() {
 
   return (
     <>
+      <Preloader />
       <a href="#main" className="skip-link">Skip to content</a>
       <div className="progress" aria-hidden="true" />
       <Navbar active={active} />

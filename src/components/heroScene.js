@@ -77,7 +77,7 @@ export function mountHeroScene(canvas, stage) {
     const k = 1 - Math.pow(0.001, dt) // frame-rate independent lerp factor
     cur.x += (target.x - cur.x) * Math.min(k * 1.6, 1)
     cur.y += (target.y - cur.y) * Math.min(k * 1.6, 1)
-    cur.intro += (1 - cur.intro) * Math.min(k * 0.9, 1)
+    if (!document.documentElement.classList.contains('is-loading')) cur.intro += (1 - cur.intro) * Math.min(k * 0.9, 1) // wait for the intro curtain
     const intro = 1 - cur.intro // 1 → 0 over the entrance
     const scroll = Math.min(scrollY / innerHeight, 1.2)
 
@@ -104,7 +104,9 @@ export function mountHeroScene(canvas, stage) {
     cancelAnimationFrame(raf)
     if (e.isIntersecting) loop()
   })
-  if (reduce) { cur.intro = 1; frame() } else io.observe(canvas)
+  renderer.compile(scene, camera) // pay shader cost up front, behind the intro curtain
+  if (reduce) { cur.intro = 1; frame() } else { frame(); io.observe(canvas) }
+  window.__heroReady = true // read by the Preloader
   canvas.dataset.ready = ''
 
   return () => {
