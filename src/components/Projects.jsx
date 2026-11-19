@@ -20,12 +20,27 @@ function Links({ p }) {
   )
 }
 
+// tilt the logo toward the cursor (-1..1 on each axis)
+const tilt = (e) => {
+  const r = e.currentTarget.getBoundingClientRect()
+  e.currentTarget.style.setProperty('--tx', ((e.clientX - r.left) / r.width * 2 - 1).toFixed(3))
+  e.currentTarget.style.setProperty('--ty', ((e.clientY - r.top) / r.height * 2 - 1).toFixed(3))
+}
+const untilt = (e) => { e.currentTarget.style.setProperty('--tx', 0); e.currentTarget.style.setProperty('--ty', 0) }
+
 function Card({ p, i, featured }) {
+  const src = `/projects/${p.logo}`
   return (
-    <article className={`p-card reveal ${featured ? 'is-featured' : ''}`} style={{ '--c': p.color, '--i': i % 2 }}>
-      <div className="p-cover" aria-hidden="true">
+    <article className={`p-card reveal ${featured ? 'is-featured' : ''}`} style={{ '--c': p.color, '--ink': p.ink || '#fff', '--ls': p.logoScale || 1, '--i': i % 2 }}>
+      <div className="p-cover" aria-hidden="true" onPointerMove={tilt} onPointerLeave={untilt}>
         <span className="p-num">{String(i + 1).padStart(2, '0')}</span>
-        <span className="p-initial">{p.initial}</span>
+        {/* stacked copies pushed back in Z give the flat logo real thickness when it tilts */}
+        <div className="p-float">
+          <div className="p-logo">
+            {[6, 5, 4, 3, 2, 1].map((d) => <img key={d} src={src} alt="" className="p-depth" style={{ '--d': d }} loading="lazy" />)}
+            <img src={src} alt="" className="p-face" loading="lazy" />
+          </div>
+        </div>
         {featured && (
           <span className="p-score"><b>84.4</b> SUS usability score · Grade A</span>
         )}
@@ -53,7 +68,7 @@ export default function Projects() {
             <h2 className="h2">Selected projects</h2>
           </div>
           <p className="lede reveal" style={{ '--i': 1 }}>
-            Seven projects across AI, web, and mobile, starting with my undergraduate thesis.
+            {projects.length} projects across AI, automation, web and mobile, starting with my solo-built thesis.
           </p>
         </div>
 
