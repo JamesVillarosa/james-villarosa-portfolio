@@ -1,8 +1,9 @@
 .bento { display: grid; gap: 12px; }
 @media (min-width: 900px) {
   .bento { grid-template-columns: repeat(12, 1fr); }
-  .b-bio { grid-column: span 7; }
-  .b-stats { grid-column: span 5; }
+  .b-photo { grid-column: span 4; }
+  .b-bio { grid-column: span 8; }
+  .bento .b-stats { grid-column: span 12; grid-template-columns: repeat(4, 1fr); }
   .b-edu { grid-column: span 5; }
   .b-info { grid-column: span 7; }
 }
@@ -12,7 +13,7 @@
 
 .b-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .stat { display: flex; flex-direction: column; justify-content: space-between; gap: 28px; min-height: 150px; }
-.stat-value { font-size: clamp(2rem, 3.6vw, 2.75rem); font-weight: 500; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat-value { font-family: var(--display); font-size: clamp(2.75rem, 5vw, 4rem); font-weight: 400; letter-spacing: 0; line-height: 1; font-variant-numeric: tabular-nums; }
 .stat-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
 
 .card-kicker { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
@@ -30,4 +31,7 @@
   .info > div { border-right-width: 0 !important; border-bottom-width: 1px; }
   .info > div:last-child { border-bottom-width: 0; }
 }
-.stat-word { font-size: 0.7em; letter-spacing: -0.025em; }
+.stat-word { text-transform: uppercase; }
+.b-photo { border-radius: var(--radius); overflow: hidden; aspect-ratio: 4 / 5; background: var(--bg-2); }
+.b-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; }
+@media (max-width: 899px) { .b-photo { max-width: 420px; } }

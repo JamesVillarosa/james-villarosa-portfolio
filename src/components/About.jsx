@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { about, education } from '../data/portfolioData'
+import { about, education, personal } from '../data/portfolioData'
 import '../styles/about.css'
 
 // counts a numeric prefix ("678+" -> 0..678 + "+") once visible; non-numbers render as-is
@@ -43,6 +43,10 @@ export default function About() {
         </div>
 
         <div className="bento">
+          <figure className="b-photo reveal">
+            <img src={personal.photo} alt={`Portrait of ${personal.name}`} width="560" height="700" loading="lazy" />
+          </figure>
+
           <div className="shell b-bio reveal">
             <div className="core spot">
               {about.bio.map((p, i) => <p key={i}>{p}</p>)}
