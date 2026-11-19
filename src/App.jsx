@@ -41,7 +41,7 @@ export default function App() {
     <>
       <a href="#main" className="skip-link">Skip to content</a>
       <div className="bg" aria-hidden="true">
-        <div className="bg-orb a" /><div className="bg-orb b" /><div className="bg-grid" /><div className="bg-noise" />
+        <div className="bg-orb a" /><div className="bg-orb b" /><div className="bg-noise" />
       </div>
       <div className="progress" aria-hidden="true" />
       <Navbar active={active} />
