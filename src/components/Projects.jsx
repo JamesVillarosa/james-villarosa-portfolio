@@ -2,30 +2,50 @@ import { projects } from '../data/portfolioData'
 import Icon from './Icons'
 import '../styles/projects.css'
 
-const SPANS = [7, 5, 5, 7, 6, 6]
-
 function Links({ p }) {
+  if (!p.github && !p.live) return <p className="p-private">{p.note || 'Private repository'}</p>
   return (
     <div className="p-links">
-      {p.github && (
-        <a href={p.github} target="_blank" rel="noreferrer" className="p-link" aria-label={`${p.name} source on GitHub`}>
-          <Icon name="github" size={16} /> Code
-        </a>
-      )}
       {p.live && (
-        <a href={p.live} target="_blank" rel="noreferrer" className="p-link p-link-live" aria-label={`${p.name} live site`}>
-          Live <Icon name="arrow" size={16} />
+        <a href={p.live} target="_blank" rel="noreferrer" className="p-link p-link-live">
+          View live <Icon name="arrow" size={16} />
         </a>
       )}
-      {!p.github && !p.live && <span className="p-link is-muted">{p.note || 'Private repository'}</span>}
+      {p.github && (
+        <a href={p.github} target="_blank" rel="noreferrer" className="p-link">
+          <Icon name="github" size={16} /> Source code
+        </a>
+      )}
     </div>
+  )
+}
+
+function Card({ p, i, featured }) {
+  return (
+    <article className={`p-card reveal ${featured ? 'is-featured' : ''}`} style={{ '--c': p.color, '--i': i % 2 }}>
+      <div className="p-cover" aria-hidden="true">
+        <span className="p-num">{String(i + 1).padStart(2, '0')}</span>
+        <span className="p-initial">{p.initial}</span>
+        {featured && (
+          <span className="p-score"><b>84.4</b> SUS usability score · Grade A</span>
+        )}
+      </div>
+      <div className="p-body">
+        {featured && <p className="p-tag">Featured · Undergraduate thesis</p>}
+        <h3 className="p-name">{p.name}</h3>
+        <p className="p-sub">{p.subtitle}</p>
+        <p className="p-desc">{p.description}</p>
+        <p className="p-stack"><span>Built with</span>{p.tech.join(' · ')}</p>
+        <Links p={p} />
+      </div>
+    </article>
   )
 }
 
 export default function Projects() {
   const [featured, ...rest] = projects
   return (
-    <section id="projects" className="section theme-light">
+    <section id="projects" className="section theme-light" data-ghost="Work">
       <div className="container">
         <div className="section-head">
           <div className="reveal">
@@ -37,45 +57,9 @@ export default function Projects() {
           </p>
         </div>
 
-        <div className="shell p-featured reveal">
-          <article className="core spot p-feat-core">
-            <div className="p-feat-copy">
-              <span className="card-kicker">Featured · Thesis · {featured.note}</span>
-              <h3 className="p-feat-title">{featured.name}</h3>
-              <p className="p-sub">{featured.subtitle}</p>
-              <p className="muted">{featured.description}</p>
-              <div className="chips">{featured.tech.map((t) => <span key={t} className="chip">{t}</span>)}</div>
-              <Links p={featured} />
-            </div>
-            <div className="p-feat-visual" aria-hidden="true">
-              <div className="sus">
-                <span className="sus-num">84.4</span>
-                <span className="sus-label">SUS score<br />Grade A</span>
-                <svg viewBox="0 0 120 120" className="sus-ring"><circle cx="60" cy="60" r="52" /><circle cx="60" cy="60" r="52" className="sus-fill" /></svg>
-              </div>
-              <div className="langs">
-                {['Tagalog', 'Cebuano', 'Hiligaynon'].map((l, i) => <span key={l} style={{ '--d': i }}>{l}</span>)}
-              </div>
-            </div>
-          </article>
-        </div>
-
+        <Card p={featured} i={0} featured />
         <div className="p-grid">
-          {rest.map((p, i) => (
-            <div key={p.id} className="shell p-card reveal" style={{ '--span': SPANS[i], '--i': i % 2 }}>
-              <article className="core spot">
-                <div className="p-top">
-                  <span className="p-mono" style={{ '--c': p.color }}>{p.initial}</span>
-                  <span className="p-idx">0{i + 2}</span>
-                </div>
-                <h3 className="card-title">{p.name}</h3>
-                <p className="p-sub">{p.subtitle}</p>
-                <p className="muted p-desc">{p.description}</p>
-                <div className="chips">{p.tech.slice(0, 5).map((t) => <span key={t} className="chip">{t}</span>)}</div>
-                <Links p={p} />
-              </article>
-            </div>
-          ))}
+          {rest.map((p, i) => <Card key={p.id} p={p} i={i + 1} />)}
         </div>
       </div>
     </section>
