@@ -131,9 +131,8 @@ export const projects = [
     description:
       'Full-stack alumni management platform with a FastAPI backend, a React + Tailwind CSS frontend, and an integrated AI chat interface for real-time user support.',
     tech: ['FastAPI', 'React', 'Tailwind CSS', 'MongoDB', 'AI chat'],
-    github: null,
+    github: 'https://github.com/JamesVillarosa/reconnect-alumni-tracker',
     live: null,
-    note: 'Private repository',
     logo: 'reconnect.png',
     color: '#e6f2fb',
     ink: '#0b1f33',
