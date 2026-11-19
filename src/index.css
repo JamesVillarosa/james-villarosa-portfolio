@@ -156,3 +156,20 @@ section[id] { scroll-margin-top: 24px; }
 }
 .eyebrow { color: var(--dim); }
 .btn-primary .btn-icon { background: var(--hot); color: #fff; }
+
+/* giant tonal word behind each section header, echoing the hero */
+.section[data-ghost] { overflow: clip; isolation: isolate; }
+.section[data-ghost]::before {
+  content: attr(data-ghost); position: absolute; z-index: -1; top: clamp(24px, 4vw, 56px); right: -0.04em;
+  font-family: var(--display); text-transform: uppercase; line-height: 0.8; white-space: nowrap;
+  font-size: clamp(6rem, 22vw, 20rem); color: var(--ghost); pointer-events: none;
+}
+
+/* moving statement band under the hero (rotated, so main clips its overhang) */
+main { overflow-x: clip; }
+.band { background: var(--hot); color: #fff; overflow: hidden; padding: 18px 0; transform: rotate(-1.2deg) scale(1.02); margin-block: -10px; position: relative; z-index: 2; }
+.band-track { display: flex; width: max-content; animation: band 28s linear infinite; }
+.band span { font-family: var(--display); text-transform: uppercase; font-size: clamp(1.75rem, 4vw, 3rem); line-height: 1; white-space: nowrap; }
+.band b { font-weight: 400; color: #0b1f33; margin-inline: 0.5em; font-size: 0.6em; vertical-align: 0.25em; }
+@keyframes band { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .band-track { animation: none; } }

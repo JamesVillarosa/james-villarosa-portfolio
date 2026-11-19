@@ -33,7 +33,7 @@ function Count({ value }) {
 
 export default function About() {
   return (
-    <section id="about" className="section theme-light">
+    <section id="about" className="section theme-light" data-ghost="About">
       <div className="container">
         <div className="section-head">
           <div className="reveal">

@@ -3,7 +3,7 @@ import '../styles/experience.css'
 
 export default function Experience() {
   return (
-    <section id="experience" className="section theme-navy">
+    <section id="experience" className="section theme-navy" data-ghost="Career">
       <div className="container">
         <div className="section-head">
           <div className="reveal">

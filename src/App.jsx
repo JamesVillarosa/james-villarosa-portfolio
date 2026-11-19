@@ -44,6 +44,13 @@ export default function App() {
       <Navbar active={active} />
       <main id="main">
         <Hero />
+        <div className="band" aria-hidden="true">
+          <div className="band-track">
+            {Array.from({ length: 2 }, (_, i) => (
+              <span key={i}>Backend systems <b>✕</b> Full stack apps <b>✕</b> AI integrations <b>✕</b> Production deploys <b>✕</b>&nbsp;</span>
+            ))}
+          </div>
+        </div>
         <About />
         <Experience />
         <Projects />
