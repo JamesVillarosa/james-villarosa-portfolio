@@ -6,7 +6,7 @@
 
 /* giant tonal word behind everything, like a product backdrop */
 .hero-ghost {
-  position: absolute; z-index: -2; left: 50%; top: 52%;
+  position: absolute; z-index: -3; left: 50%; top: 52%;
   transform: translate(-50%, -50%);
   font-family: var(--display); text-transform: uppercase; line-height: 0.8;
   font-size: clamp(7rem, 24vw, 26rem); letter-spacing: -0.01em; white-space: nowrap;
@@ -69,7 +69,7 @@
 
 /* studio lighting: key light behind the mark, darker falloff to the edges and floor */
 .hero::before {
-  content: ''; position: absolute; inset: 0; z-index: -3; pointer-events: none;
+  content: ''; position: absolute; inset: 0; z-index: -4; pointer-events: none;
   background:
     radial-gradient(ellipse 42% 55% at 55% 46%, rgba(120, 190, 245, 0.55), transparent 70%),
     radial-gradient(ellipse 120% 90% at 50% 40%, transparent 45%, rgba(6, 34, 66, 0.55) 100%),
@@ -83,3 +83,23 @@
 
 /* hold the hero choreography until the intro curtain lifts */
 .is-loading .hero-in, .is-loading .hero-ghost { animation-play-state: paused; }
+
+/* ── Intro: navy stage under the spinning V, closes as an iris into the mark ── */
+html.is-loading { overflow: hidden; }
+.is-loading .nav-wrap { opacity: 0; transition: none; }
+.nav-wrap { transition: opacity 800ms var(--ease-out) 500ms; }
+
+.intro {
+  position: absolute; inset: 0; z-index: -2;
+  background: radial-gradient(ellipse 50% 45% at 50% 50%, #12497a, #082440 70%);
+  clip-path: circle(150% at 50% 50%);
+  transition: clip-path 1300ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.intro.is-out { clip-path: circle(0% at 50% 50%); }
+.intro > span { position: absolute; bottom: 36px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #9dbbd8; animation: rise 900ms var(--ease-out) 300ms both; }
+.intro-name { left: var(--gutter); }
+.intro-count { right: var(--gutter); color: #fff !important; font-variant-numeric: tabular-nums; }
+.intro-line { left: 50%; width: min(240px, 40vw); height: 1px; margin-left: calc(min(240px, 40vw) / -2); bottom: 42px !important; background: rgba(255, 255, 255, 0.18); }
+.intro-line i { position: absolute; inset: 0; background: var(--hot); transform-origin: 0 50%; }
+.intro.is-out > span { opacity: 0; transition: opacity 300ms; }
+@media (max-width: 600px) { .intro-name { display: none; } }

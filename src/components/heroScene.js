@@ -19,6 +19,9 @@ export function mountHeroScene(canvas, stage) {
   const key = new THREE.DirectionalLight(0xffffff, 1.6)
   key.position.set(3, 5, 6)
   scene.add(key)
+  const rim = new THREE.PointLight(0xff6a3d, 40, 14) // warm rim from behind-left catches the bevels
+  rim.position.set(-3.5, -1.5, -2.5)
+  scene.add(rim)
 
   // V outline: two chunky arms meeting at a flat base
   const s = new THREE.Shape()
@@ -58,6 +61,7 @@ export function mountHeroScene(canvas, stage) {
     place.x = ((r.left + r.width / 2 - c.left) / w * 2 - 1) * halfW
     place.y = -((r.top + r.height / 2 - c.top) / h * 2 - 1) * halfH
     place.s = Math.min(r.width / w * halfW, r.height / h * halfH) * 0.62
+    place.cs = Math.min(halfW, halfH) * 0.34 // intro pose: big, dead centre
   }
   resize()
   const ro = new ResizeObserver(resize)
@@ -65,7 +69,7 @@ export function mountHeroScene(canvas, stage) {
   ro.observe(stage)
 
   const target = { x: 0, y: 0 }
-  const cur = { x: 0, y: 0, intro: 0 }
+  const cur = { x: 0, y: 0, intro: 0, spin: 0, settle: null }
   const onMove = (e) => { target.x = e.clientX / innerWidth - 0.5; target.y = e.clientY / innerHeight - 0.5 }
   addEventListener('pointermove', onMove, { passive: true })
 
@@ -77,23 +81,30 @@ export function mountHeroScene(canvas, stage) {
     const k = 1 - Math.pow(0.001, dt) // frame-rate independent lerp factor
     cur.x += (target.x - cur.x) * Math.min(k * 1.6, 1)
     cur.y += (target.y - cur.y) * Math.min(k * 1.6, 1)
-    if (!document.documentElement.classList.contains('is-loading')) cur.intro += (1 - cur.intro) * Math.min(k * 0.9, 1) // wait for the intro curtain
-    const intro = 1 - cur.intro // 1 → 0 over the entrance
+    // intro: spin in the centre while loading, then glide to the stage and settle facing forward
+    if (document.documentElement.classList.contains('is-loading')) cur.spin += dt * 1.1
+    else {
+      cur.intro += (1 - cur.intro) * Math.min(k * 0.55, 1)
+      cur.settle ??= Math.ceil(cur.spin / (Math.PI * 2)) * Math.PI * 2
+      cur.spin += (cur.settle - cur.spin) * Math.min(k * 0.6, 1)
+    }
+    const e = cur.intro, lerp = (a, b) => a + (b - a) * e
+    const px = lerp(0, place.x), py = lerp(0, place.y), ps = lerp(place.cs, place.s)
     const scroll = Math.min(scrollY / innerHeight, 1.2)
 
     const bob = Math.sin(t * 1.1) * 0.08
-    rig.position.set(place.x, place.y + bob * place.s - intro * 1.2 + scroll * 1.5, 0)
-    rig.scale.setScalar(place.s * (1 - scroll * 0.25))
+    rig.position.set(px, py + bob * ps + scroll * 1.5, 0)
+    rig.scale.setScalar(ps * (1 - scroll * 0.25))
     rig.rotation.set(
-      0.18 + cur.y * 0.35 - intro * 0.4,
-      0.42 + Math.sin(t * 0.45) * 0.32 + cur.x * 0.7 - intro * 1.6 + scroll * 1.2,
+      0.18 + cur.y * 0.35 * e,
+      cur.spin + e * (0.42 + Math.sin(t * 0.45) * 0.32 + cur.x * 0.7) + scroll * 1.2,
       -0.12 + Math.sin(t * 0.6) * 0.03,
     )
 
-    shadow.position.set(place.x, place.y - place.s * 1.55 + scroll * 1.5, -0.6)
-    const sw = place.s * (2.4 - bob * 2)
+    shadow.position.set(px, py - ps * 1.55 + scroll * 1.5, -0.6)
+    const sw = ps * (2.4 - bob * 2)
     shadow.scale.set(sw, sw * 0.28, 1)
-    shadow.material.opacity = (0.85 - bob * 2) * cur.intro * (1 - Math.min(scroll, 1))
+    shadow.material.opacity = (0.85 - bob * 2) * (1 - Math.min(scroll, 1))
     renderer.render(scene, camera)
   }
 
@@ -106,7 +117,7 @@ export function mountHeroScene(canvas, stage) {
   })
   renderer.compile(scene, camera) // pay shader cost up front, behind the intro curtain
   if (reduce) { cur.intro = 1; frame() } else { frame(); io.observe(canvas) }
-  window.__heroReady = true // read by the Preloader
+  window.__heroReady = true // read by the hero intro
   canvas.dataset.ready = ''
 
   return () => {

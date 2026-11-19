@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { personal } from '../data/portfolioData'
 import Icon from './Icons'
 import '../styles/hero.css'
@@ -9,9 +9,46 @@ const SPECS = [
   ['Open to', personal.available],
 ]
 
+const INTRO_MS = 3000 // spin time; holds at 90% until the 3D scene is ready
+const MAX_WAIT = 6000 // never trap the visitor if WebGL is slow or missing
+
+// Intro: navy screen, the V spins centre stage while a counter runs, then the navy irises into the V.
+function useIntro() {
+  const [skip] = useState(() => {
+    try { return matchMedia('(prefers-reduced-motion: reduce)').matches || !!sessionStorage.getItem('intro-seen') }
+    catch { return false }
+  })
+  const [p, setP] = useState(0)
+  const [phase, setPhase] = useState(skip ? 'done' : 'load')
+
+  useEffect(() => {
+    if (skip) return
+    const root = document.documentElement
+    try { sessionStorage.setItem('intro-seen', '1') } catch { /* ignore */ }
+    root.classList.add('is-loading')
+    scrollTo(0, 0)
+    let raf, t0, timer
+    const tick = (t) => {
+      t0 ??= t
+      const el = t - t0
+      const prog = Math.min(el / INTRO_MS, window.__heroReady || el > MAX_WAIT ? 1 : 0.9)
+      setP(prog)
+      if (prog < 1) { raf = requestAnimationFrame(tick); return }
+      root.classList.remove('is-loading')
+      setPhase('out')
+      timer = setTimeout(() => setPhase('done'), 1400)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => { cancelAnimationFrame(raf); clearTimeout(timer); root.classList.remove('is-loading') }
+  }, [skip])
+
+  return { p, phase }
+}
+
 export default function Hero() {
   const canvas = useRef(null)
   const stage = useRef(null)
+  const { p, phase } = useIntro()
 
   useEffect(() => {
     let cleanup, dead = false
@@ -26,6 +63,13 @@ export default function Hero() {
   return (
     <section id="hero" className="hero">
       <p className="hero-ghost" aria-hidden="true">Villarosa</p>
+      {phase !== 'done' && (
+        <div className={`intro ${phase === 'out' ? 'is-out' : ''}`} aria-hidden="true">
+          <span className="intro-name">James Carl Villarosa</span>
+          <span className="intro-line"><i style={{ transform: `scaleX(${p})` }} /></span>
+          <span className="intro-count">{String(Math.round(p * 100)).padStart(3, '0')}</span>
+        </div>
+      )}
       <canvas ref={canvas} className="hero-canvas" aria-hidden="true" />
 
       <div className="container hero-grid">
