@@ -1,0 +1,72 @@
+.p-sub { color: var(--text); opacity: 0.8; margin-bottom: 14px; }
+.p-desc { font-size: 15px; margin-bottom: 22px; flex: 1; }
+
+.p-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.p-link {
+  display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 999px;
+  font-size: 14px; border: 1px solid var(--line-2); background: var(--surface);
+  transition: border-color 200ms var(--ease-out), background-color 200ms var(--ease-out), transform 160ms var(--ease-out);
+}
+.p-link:active { transform: scale(0.97); }
+.p-link-live { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+.p-link.is-muted { color: var(--dim); font-family: var(--mono); font-size: 12px; }
+@media (hover: hover) {
+  a.p-link:not(.p-link-live):hover { border-color: rgba(255, 255, 255, 0.24); background: var(--surface-2); }
+  .p-link-live:hover { background: #d6ff7a; }
+}
+
+/* featured */
+.p-featured { margin-bottom: 12px; }
+.p-feat-core { display: grid; gap: 40px; padding: clamp(24px, 4vw, 48px); }
+@media (min-width: 900px) { .p-feat-core { grid-template-columns: 1.3fr 1fr; align-items: center; } }
+.p-feat-copy .muted { margin-bottom: 22px; max-width: 58ch; }
+.p-feat-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 500; letter-spacing: -0.045em; line-height: 1; margin-bottom: 10px; }
+
+.p-feat-visual {
+  position: relative; display: grid; place-items: center; gap: 24px; min-height: 320px;
+  border-radius: 20px; border: 1px solid var(--line); padding: 32px;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(37, 99, 235, 0.22), transparent 60%),
+    repeating-linear-gradient(90deg, transparent 0 23px, var(--line) 23px 24px),
+    #0a0b0e;
+}
+.sus { position: relative; width: 180px; aspect-ratio: 1; display: grid; place-content: center; text-align: center; }
+.sus-num { font-size: 3rem; font-weight: 500; letter-spacing: -0.04em; line-height: 1; }
+.sus-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+.sus-ring { position: absolute; inset: 0; transform: rotate(-90deg); fill: none; stroke-width: 3; }
+.sus-ring circle { stroke: var(--line-2); }
+.sus-ring .sus-fill {
+  stroke: var(--accent); stroke-linecap: round; stroke-dasharray: 327; stroke-dashoffset: 327;
+  transition: stroke-dashoffset 1600ms var(--ease-out) 300ms;
+}
+.p-featured.in .sus-fill { stroke-dashoffset: calc(327 * (1 - 0.844)); }
+.langs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.langs span {
+  padding: 6px 12px; border-radius: 999px; font-size: 13px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line);
+  animation: float 5s var(--ease-in-out) infinite alternate; animation-delay: calc(var(--d) * -1.6s);
+}
+@keyframes float { to { transform: translateY(-6px); } }
+
+/* grid */
+.p-grid { display: grid; gap: 12px; }
+@media (min-width: 900px) {
+  .p-grid { grid-template-columns: repeat(12, 1fr); }
+  .p-card { grid-column: span var(--span); }
+}
+.p-card .core { display: flex; flex-direction: column; }
+/* keeps .reveal's fade while adding the hover lift; delay dropped once revealed so hover is instant */
+.p-card { transition: opacity 900ms var(--ease-out), filter 900ms var(--ease-out), transform 700ms var(--ease-out), border-color 300ms var(--ease-out); }
+.p-card.in { transition-delay: 0ms; }
+@media (hover: hover) { .p-card.in:hover { transform: translateY(-4px); border-color: var(--line-2); } }
+
+.p-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 36px; }
+.p-mono {
+  width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center;
+  font-family: var(--mono); font-size: 13px; font-weight: 500;
+  color: var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); border: 1px solid color-mix(in srgb, var(--c) 30%, transparent);
+  transition: transform 400ms var(--ease-out);
+}
+@media (hover: hover) { .p-card:hover .p-mono { transform: rotate(-8deg) scale(1.05); } }
+.p-idx { font-family: var(--mono); font-size: 12px; color: var(--dim); }
+
+@media (prefers-reduced-motion: reduce) { .langs span { animation: none; } }
