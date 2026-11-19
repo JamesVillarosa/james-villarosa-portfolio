@@ -1,0 +1,36 @@
+.timeline { position: relative; display: grid; gap: clamp(40px, 6vw, 72px); padding-left: 28px; }
+.timeline::before, .timeline::after { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px; background: var(--line-2); }
+/* accent line fills as the timeline scrolls through the viewport */
+.timeline::after {
+  background: linear-gradient(var(--accent), rgba(200, 245, 96, 0.2));
+  transform-origin: top; transform: scaleY(0);
+  animation: grow-y linear both; animation-timeline: view(); animation-range: entry 20% cover 60%;
+}
+@keyframes grow-y { to { transform: scaleY(1); } }
+@supports not (animation-timeline: view()) { .timeline::after { transform: scaleY(1); } }
+
+.job { position: relative; display: grid; gap: 18px; }
+.job::before {
+  content: ''; position: absolute; left: -33px; top: 6px; width: 11px; height: 11px; border-radius: 50%;
+  background: var(--bg); border: 1px solid var(--accent); box-shadow: 0 0 0 4px var(--bg), 0 0 16px rgba(200, 245, 96, 0.5);
+}
+@media (min-width: 900px) {
+  .timeline { padding-left: 0; }
+  .timeline::before, .timeline::after { left: calc(25% - 1px); }
+  .job { grid-template-columns: 25% 1fr; gap: 0; }
+  .job::before { left: calc(25% - 6px); }
+  .job-meta { padding-right: 40px; position: sticky; top: 120px; align-self: start; }
+  .job > .shell { margin-left: 40px; }
+}
+
+.job-meta { display: grid; gap: 6px; }
+.job-period { font-family: var(--mono); font-size: 13px; color: var(--text); }
+.job-type { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+.job-loc { font-size: 14px; }
+
+.job-company { color: var(--muted); margin-bottom: 18px; }
+.job-desc { font-size: 15px; margin-bottom: 18px; }
+.job-bullets { display: grid; gap: 12px; margin-bottom: 26px; }
+.job-bullets li { position: relative; padding-left: 22px; color: var(--muted); font-size: 15px; line-height: 1.65; text-wrap: pretty; }
+.job-bullets li::before { content: ''; position: absolute; left: 0; top: 0.72em; width: 10px; height: 1px; background: var(--accent); }
+.job-bullets:last-child { margin-bottom: 0; }
