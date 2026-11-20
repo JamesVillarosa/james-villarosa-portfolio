@@ -189,16 +189,16 @@ export const projects = [
   },
   {
     id: 9,
-    name: 'Predictive Analytics Solver',
-    subtitle: 'Machine learning and optimization tool',
+    name: 'Villarosa Domain Selector',
+    subtitle: 'Domain scoring and campaign planning tool',
     description:
-      'Implements polynomial regression, quadratic spline interpolation and the Simplex method for optimization, with data visualization for decision support.',
-    tech: ['Python', 'Machine learning', 'R', 'Simplex'],
+      'A 7-step wizard that turns a client brief into a ranked shortlist of publisher domains. A configurable scoring framework (7 dimensions, hard disqualifiers, per-industry profiles) mixes deterministic keyword matching with optional Claude enrichment, then exports campaign-management spreadsheets in the exact format the team already uses.',
+    tech: ['Next.js', 'TypeScript', 'libSQL / Turso', 'Claude API', 'XLSX export', 'Unit tests'],
     github: null,
-    live: null,
-    note: 'Coursework, private',
-    logo: 'predictive.svg',
-    color: '#8B5CF6',
+    live: 'https://villarosa-domain-selector.vercel.app',
+    note: 'Private repository',
+    logo: 'domainselector.svg',
+    color: '#0f172a',
   },
 ]
 
