@@ -108,7 +108,8 @@ export const projects = [
     github: 'https://github.com/JamesVillarosa/call-intelligence',
     live: 'https://call-intelligence-ashen.vercel.app',
     logo: 'callintelligence.svg',
-    color: '#0b1230',
+    color: '#ede9fe',
+    ink: '#0b1f33',
   },
   {
     id: 3,
@@ -120,7 +121,7 @@ export const projects = [
     github: 'https://github.com/JamesVillarosa/voltline-job-board',
     live: 'https://voltline-job-board.vercel.app',
     logo: 'voltline.svg',
-    color: '#141b33',
+    color: '#0f766e',
   },
   {
     id: 4,
@@ -142,11 +143,11 @@ export const projects = [
     description:
       'A 7-step wizard that turns a client brief into a ranked shortlist of publisher domains. A configurable scoring framework (7 dimensions, hard disqualifiers, per-industry profiles) mixes deterministic keyword matching with optional Claude enrichment, then exports campaign-management spreadsheets in the exact format the team already uses.',
     tech: ['Next.js', 'TypeScript', 'libSQL / Turso', 'Claude API', 'XLSX export', 'Unit tests'],
-    github: null,
+    github: 'https://github.com/JamesVillarosa/villa-rosa-domain-selector',
     live: 'https://villarosa-domain-selector.vercel.app',
-    note: 'Private repository',
     logo: 'domainselector.svg',
-    color: '#0f172a',
+    color: '#fef3c7',
+    ink: '#0b1f33',
   },
   {
     id: 6,
@@ -208,6 +209,19 @@ export const projects = [
     live: 'https://food-review-info-system.vercel.app',
     logo: 'foodreview.svg',
     color: '#EF4444',
+  },
+  {
+    id: 11,
+    name: 'Tamaan Mo Ko Beybe',
+    subtitle: '2-player arcade game based on Filipino dodgeball',
+    description:
+      "A desktop take on tamaang tao, the Filipino schoolyard dodgeball game. One player throws with the mouse and arrow keys, the other dodges with WASD, and the thrower has to land a hit before the timer runs out. Custom character sprites, animated menus, sound effects and win screens.",
+    tech: ['Java', 'JavaFX', 'Game loop', 'Sprite animation'],
+    github: 'https://github.com/JamesVillarosa/Tamaan-Mo-Ko-Beybe-Java-',
+    live: null,
+    logo: 'tamaan.png',
+    logoScale: 1.5,
+    color: '#0ea5e9',
   },
 ]
 
