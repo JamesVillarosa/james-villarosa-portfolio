@@ -122,7 +122,7 @@ export const projects = [
     github: 'https://github.com/JamesVillarosa/voltline-job-board',
     live: 'https://voltline-job-board.vercel.app',
     logo: 'voltline.svg',
-    color: '#4b6bff',
+    color: '#141b33',
   },
   {
     id: 4,
@@ -132,7 +132,8 @@ export const projects = [
       'Full-stack alumni management platform with a FastAPI backend, a React + Tailwind CSS frontend, and an integrated AI chat interface for real-time user support.',
     tech: ['FastAPI', 'React', 'Tailwind CSS', 'MongoDB', 'AI chat'],
     github: 'https://github.com/JamesVillarosa/reconnect-alumni-tracker',
-    live: null,
+    live: 'https://jamesvillarosa.github.io/reconnect-alumni-tracker/',
+    liveLabel: 'View UI demo',
     logo: 'reconnect.png',
     color: '#e6f2fb',
     ink: '#0b1f33',
