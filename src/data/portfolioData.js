@@ -92,7 +92,7 @@ export const projects = [
     description:
       'Designed, built and launched the whole product alone: front end, REST backend, database schema, RAG pipeline and a streaming speech-to-text / text-to-speech voice loop for Filipino languages. Engineered for correctness with hallucination detection, structured observability logging and retry with exponential backoff. Validated with 20 real users at SUS 84.4/100, Grade A (UP CMSC 190 thesis).',
     tech: ['React Native (Expo)', 'TypeScript', 'Python (FastAPI)', 'PostgreSQL', 'Supabase', 'Groq Whisper', 'Azure TTS', 'Gemini API', 'RAG'],
-    github: 'https://github.com/JamesVillarosa/ANO-KAMO',
+    github: 'https://github.com/JamesVillarosa/ANO-KAMO/tree/main/Downloads/SP%20Passed%20Cutie!!!/Coding%20Implemention/ANOKAMO',
     live: 'https://www.canva.com/design/DAHGL17zYG0/4xIrdnM-E6MLQjDCfp8NYA/view',
     liveLabel: 'View presentation',
     logo: 'anokamo.png',
