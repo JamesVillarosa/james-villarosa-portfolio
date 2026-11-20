@@ -94,23 +94,21 @@ export const projects = [
     tech: ['React Native (Expo)', 'TypeScript', 'Python (FastAPI)', 'PostgreSQL', 'Supabase', 'Groq Whisper', 'Azure TTS', 'Gemini API', 'RAG'],
     github: 'https://github.com/JamesVillarosa/ANO-KAMO/tree/main/Downloads/SP%20Passed%20Cutie!!!/Coding%20Implemention/ANOKAMO',
     live: 'https://www.canva.com/design/DAHGL17zYG0/4xIrdnM-E6MLQjDCfp8NYA/view',
-    liveLabel: 'View presentation',
     logo: 'anokamo.png',
     color: '#ffd56b',
     ink: '#0b1f33',
   },
   {
     id: 2,
-    name: 'Golden Valley',
-    subtitle: 'Operations app for a real operating business',
+    name: 'Call Intelligence',
+    subtitle: 'Call scoring and coaching dashboard',
     description:
-      'A delivery-based business system built end to end: order and delivery management, an offline queue with reliable sync for field staff, fuzzy-matching deduplication of customer records, role-based access, and a real-time admin dashboard for the owner.',
-    tech: ['React Native (Expo)', 'TypeScript', 'Supabase', 'PostgreSQL', 'Auth + RLS'],
-    github: 'https://github.com/JamesVillarosa/GoldenValley-2.0',
-    live: null,
-    logo: 'goldenvalley.png',
-    logoScale: 1.7,
-    color: '#1f3d2b',
+      "Every customer call is transcribed, classified and scored against the company's call framework, then turned into coaching an owner can act on. The model judges each step but code owns the score: every passed step must quote the transcript, and the quote is checked against the actual lines. Synced audio and transcript, saved views, CSV export and a command palette, all on fictional demo data with no login.",
+    tech: ['Next.js', 'React 19', 'TypeScript', 'Tailwind CSS', 'Deepgram', 'Groq / Claude', 'Vitest', 'Playwright'],
+    github: 'https://github.com/JamesVillarosa/call-intelligence',
+    live: 'https://call-intelligence-ashen.vercel.app',
+    logo: 'callintelligence.svg',
+    color: '#0b1230',
   },
   {
     id: 3,
@@ -126,6 +124,32 @@ export const projects = [
   },
   {
     id: 4,
+    name: 'Golden Valley',
+    subtitle: 'Operations app for a real operating business',
+    description:
+      'A delivery-based business system built end to end: order and delivery management, an offline queue with reliable sync for field staff, fuzzy-matching deduplication of customer records, role-based access, and a real-time admin dashboard for the owner.',
+    tech: ['React Native (Expo)', 'TypeScript', 'Supabase', 'PostgreSQL', 'Auth + RLS'],
+    github: 'https://github.com/JamesVillarosa/GoldenValley-2.0',
+    live: null,
+    logo: 'goldenvalley.png',
+    logoScale: 1.7,
+    color: '#1f3d2b',
+  },
+  {
+    id: 5,
+    name: 'villa.rosa: domain selector',
+    subtitle: 'Domain scoring and campaign planning tool',
+    description:
+      'A 7-step wizard that turns a client brief into a ranked shortlist of publisher domains. A configurable scoring framework (7 dimensions, hard disqualifiers, per-industry profiles) mixes deterministic keyword matching with optional Claude enrichment, then exports campaign-management spreadsheets in the exact format the team already uses.',
+    tech: ['Next.js', 'TypeScript', 'libSQL / Turso', 'Claude API', 'XLSX export', 'Unit tests'],
+    github: null,
+    live: 'https://villarosa-domain-selector.vercel.app',
+    note: 'Private repository',
+    logo: 'domainselector.svg',
+    color: '#0f172a',
+  },
+  {
+    id: 6,
     name: 'Reconnect',
     subtitle: 'Alumni tracker and relations management system',
     description:
@@ -133,13 +157,12 @@ export const projects = [
     tech: ['FastAPI', 'React', 'Tailwind CSS', 'MongoDB', 'AI chat'],
     github: 'https://github.com/JamesVillarosa/reconnect-alumni-tracker',
     live: 'https://jamesvillarosa.github.io/reconnect-alumni-tracker/',
-    liveLabel: 'View UI demo',
     logo: 'reconnect.png',
     color: '#e6f2fb',
     ink: '#0b1f33',
   },
   {
-    id: 5,
+    id: 7,
     name: 'Crop Circle',
     subtitle: 'Farmer-to-consumer ecommerce platform',
     description:
@@ -147,13 +170,12 @@ export const projects = [
     tech: ['MongoDB', 'Express', 'React', 'Node.js'],
     github: 'https://github.com/JamesVillarosa/Crop-Circle',
     live: 'https://crop-circle-pi.vercel.app',
-    liveLabel: 'View UI demo',
     logo: 'cropcircle.svg',
     color: '#10B981',
   },
   {
-    id: 6,
-    name: 'Dodo Donation System',
+    id: 8,
+    name: 'Dodo: donation system',
     subtitle: 'Mobile donation management app',
     description:
       'Flutter app connecting donors, organizations and admins for donation drives, pickups and tracking, with Firebase Authentication and Firestore.',
@@ -164,7 +186,7 @@ export const projects = [
     color: '#F59E0B',
   },
   {
-    id: 7,
+    id: 9,
     name: 'AI Email Spam Filter',
     subtitle: 'NLP bag-of-words classifier',
     description:
@@ -176,7 +198,7 @@ export const projects = [
     color: '#6366F1',
   },
   {
-    id: 8,
+    id: 10,
     name: 'Food Review Info System',
     subtitle: 'Database-backed review platform',
     description:
@@ -184,22 +206,8 @@ export const projects = [
     tech: ['MySQL', 'Python', 'Flask', 'HTML'],
     github: 'https://github.com/JamesVillarosa/Food-Review-Information-System',
     live: 'https://food-review-info-system.vercel.app',
-    liveLabel: 'View UI demo',
     logo: 'foodreview.svg',
     color: '#EF4444',
-  },
-  {
-    id: 9,
-    name: 'Villarosa Domain Selector',
-    subtitle: 'Domain scoring and campaign planning tool',
-    description:
-      'A 7-step wizard that turns a client brief into a ranked shortlist of publisher domains. A configurable scoring framework (7 dimensions, hard disqualifiers, per-industry profiles) mixes deterministic keyword matching with optional Claude enrichment, then exports campaign-management spreadsheets in the exact format the team already uses.',
-    tech: ['Next.js', 'TypeScript', 'libSQL / Turso', 'Claude API', 'XLSX export', 'Unit tests'],
-    github: null,
-    live: 'https://villarosa-domain-selector.vercel.app',
-    note: 'Private repository',
-    logo: 'domainselector.svg',
-    color: '#0f172a',
   },
 ]
 
