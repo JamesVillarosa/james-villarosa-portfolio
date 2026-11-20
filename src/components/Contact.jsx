@@ -30,7 +30,8 @@ export default function Contact() {
           <p className="lede">Open to remote and full-time roles in backend, full-stack, and AI engineering.</p>
 
           <div className="mail-row">
-            <a href={`mailto:${personal.email}`} className="btn btn-primary">
+            {/* Gmail compose works without a desktop mail app; the copy button covers everyone else */}
+            <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${personal.email}&su=${encodeURIComponent("Let's work together")}`} target="_blank" rel="noreferrer" className="btn btn-primary">
               Email me <span className="btn-icon"><Icon name="arrow" size={16} /></span>
             </a>
             <button className="btn btn-ghost has-icon copy" onClick={copy} aria-live="polite">

@@ -94,7 +94,7 @@ export default function Hero() {
           <div className="hero-social">
             <a href={personal.github} target="_blank" rel="noreferrer" className="icon-link" aria-label="GitHub"><Icon name="github" /></a>
             <a href={personal.linkedin} target="_blank" rel="noreferrer" className="icon-link" aria-label="LinkedIn"><Icon name="linkedin" /></a>
-            <a href={`mailto:${personal.email}`} className="icon-link" aria-label="Email"><Icon name="mail" /></a>
+            <a href="#contact" className="icon-link" aria-label="Contact"><Icon name="mail" /></a>
           </div>
         </dl>
       </div>

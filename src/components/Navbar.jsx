@@ -43,7 +43,7 @@ export default function Navbar({ active }) {
             </li>
           ))}
         </ul>
-        <a href={`mailto:${personal.email}`} className="nav-cta">Let's talk</a>
+        <a href="#contact" className="nav-cta">Let's talk</a>
         <button className={`burger ${open ? 'is-open' : ''}`} onClick={() => setOpen(!open)}
           aria-label={open ? 'Close menu' : 'Open menu'} aria-expanded={open} aria-controls="mobile-menu">
           <span /><span />
