@@ -47,8 +47,7 @@ function Card({ p, i, featured }) {
       </div>
       <div className="p-body">
         {featured && <p className="p-tag">Featured · Undergraduate thesis</p>}
-        {/* all-lowercase names are brand styling (villa.rosa), so keep their case */}
-        <h3 className={`p-name ${p.name === p.name.toLowerCase() ? "is-literal" : ""}`}>{p.name}</h3>
+                <h3 className="p-name">{p.name}</h3>
         <p className="p-sub">{p.subtitle}</p>
         <p className="p-desc">{p.description}</p>
         <p className="p-stack"><span>Built with</span>{p.tech.join(' · ')}</p>
