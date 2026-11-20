@@ -58,3 +58,4 @@
 .p-face { filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.28)); }
 @media (hover: hover) { .p-cover:hover { --s: 1.08; } }
 @media (prefers-reduced-motion: reduce) { .p-float { animation: none; } .p-logo { transition: none; } }
+.p-name.is-literal { text-transform: none; }

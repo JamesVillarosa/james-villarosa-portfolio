@@ -8,7 +8,7 @@ function Links({ p }) {
     <div className="p-links">
       {p.live && (
         <a href={p.live} target="_blank" rel="noreferrer" className="p-link p-link-live">
-          {p.liveLabel || 'View live'} <Icon name="arrow" size={16} />
+          View live <Icon name="arrow" size={16} />
         </a>
       )}
       {p.github && (
@@ -47,7 +47,8 @@ function Card({ p, i, featured }) {
       </div>
       <div className="p-body">
         {featured && <p className="p-tag">Featured · Undergraduate thesis</p>}
-        <h3 className="p-name">{p.name}</h3>
+        {/* all-lowercase names are brand styling (villa.rosa), so keep their case */}
+        <h3 className={`p-name ${p.name === p.name.toLowerCase() ? "is-literal" : ""}`}>{p.name}</h3>
         <p className="p-sub">{p.subtitle}</p>
         <p className="p-desc">{p.description}</p>
         <p className="p-stack"><span>Built with</span>{p.tech.join(' · ')}</p>
